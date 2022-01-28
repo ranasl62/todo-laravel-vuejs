@@ -4,6 +4,7 @@ import type from './type';
 import addTask from "./todo/add-task";
 import fetchTasks from "./todo/fetch-tasks";
 import fetchTask from "./todo/fetch-task";
+import updateStatusTasks from "./todo/update-status-task";
 
 Vue.use(Vuex);
 
@@ -44,6 +45,9 @@ export const store = new Vuex.Store({
         [type.CurrentTodoSetter]: (state, payload) => {
             state.currentTask = payload;
         },
+        [type.StatusUpdateTodoSetter]: (state, payload) => {
+            state.todoList.data = state.todoList.data.map(task => payload.tuid === task.tuid ? payload : task);
+        },
     },
     actions: {
         [type.AddTodoAction]: (context, payload) => {
@@ -56,7 +60,7 @@ export const store = new Vuex.Store({
             fetchTask(context, payload);
         },
         [type.StatusUpdateTodoAction]: (context, payload) => {
-            fetchTask(context, payload);
+            updateStatusTasks(context, payload);
         },
         // [type.AddTodo]: (context, {payload}) => {
         //     updateTask(context, payload);

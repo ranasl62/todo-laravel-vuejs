@@ -24,4 +24,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::apiResources([
         'todo' => TodoController::class,
     ]);
+    Route::put(
+        'todo/status/{tuid}', [TodoController::class, 'updateStatus']
+    );
 });

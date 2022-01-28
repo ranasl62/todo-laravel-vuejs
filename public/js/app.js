@@ -5747,12 +5747,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "store": () => (/* binding */ store)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./type */ "./resources/js/store/type.js");
 /* harmony import */ var _todo_add_task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo/add-task */ "./resources/js/store/todo/add-task.js");
 /* harmony import */ var _todo_fetch_tasks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./todo/fetch-tasks */ "./resources/js/store/todo/fetch-tasks.js");
 /* harmony import */ var _todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./todo/fetch-task */ "./resources/js/store/todo/fetch-task.js");
+/* harmony import */ var _todo_update_status_task__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./todo/update-status-task */ "./resources/js/store/todo/update-status-task.js");
 var _getters, _mutations, _actions;
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -5775,8 +5776,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_4__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_5__["default"]);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store({
+
+vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_6__["default"]);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_6__["default"].Store({
   state: {
     todoList: [],
     currentTask: {},
@@ -5799,6 +5801,10 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store({
     state.todoList.data = [payload].concat(_toConsumableArray(state.todoList.data));
   }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoSetter, function (state, payload) {
     state.currentTask = payload;
+  }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].StatusUpdateTodoSetter, function (state, payload) {
+    state.todoList.data = state.todoList.data.map(function (task) {
+      return payload.tuid === task.tuid ? payload : task;
+    });
   }), _mutations),
   actions: (_actions = {}, _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction, function (context, payload) {
     (0,_todo_add_task__WEBPACK_IMPORTED_MODULE_1__["default"])(context, payload);
@@ -5807,7 +5813,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_5__["default"].Store({
   }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoAction, function (context, payload) {
     (0,_todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__["default"])(context, payload);
   }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].StatusUpdateTodoAction, function (context, payload) {
-    (0,_todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__["default"])(context, payload);
+    (0,_todo_update_status_task__WEBPACK_IMPORTED_MODULE_4__["default"])(context, payload);
   }), _actions)
 });
 
@@ -5983,6 +5989,63 @@ var fetchTasks = function fetchTasks(context) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fetchTasks);
+
+/***/ }),
+
+/***/ "./resources/js/store/todo/update-status-task.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/store/todo/update-status-task.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_httpClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/httpClient */ "./resources/js/lib/httpClient.js");
+/* harmony import */ var _type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../type */ "./resources/js/store/type.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+var updateStatusTasks = function updateStatusTasks(context, tuid) {
+  (0,_lib_httpClient__WEBPACK_IMPORTED_MODULE_1__["default"])('/api/v1/todo/status/' + tuid, 'PUT').then( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return response.json();
+
+            case 2:
+              res = _context.sent;
+              context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].StatusUpdateTodoSetter, res.data);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (updateStatusTasks);
 
 /***/ }),
 
