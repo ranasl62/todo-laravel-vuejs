@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Todolist extends Migration
+class CreateTodoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class Todolist extends Migration
      */
     public function up()
     {
-        Schema::create('todo_list', function (Blueprint $table) {
+        Schema::create('todos', function (Blueprint $table) {
             $table->id();
             /**
              *  Refer to  todo unique ID. Unique char(36) string.
              */
             $table->uuid('tuid');
             /**
-             * The title of the todo item
+             * The title of the to-do item
              */
             $table->string('title', 128);
             /**
@@ -42,6 +42,6 @@ class Todolist extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('todos');
     }
 }
