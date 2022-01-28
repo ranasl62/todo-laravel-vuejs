@@ -8,6 +8,7 @@ use App\Http\Resources\TodoResource;
 use App\Models\Todo;
 use App\Traits\APIResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -33,26 +34,12 @@ class TodoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        try {
-
-        } catch (\Exception $ex) {
-            Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
-        }
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param StoreTodoRequest $request
      * @return JsonResponse
      */
-    public function store(StoreTodoRequest $request)
+    public function store(StoreTodoRequest $request): JsonResponse
     {
         try {
             $todo = Todo::create([
@@ -68,62 +55,55 @@ class TodoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * show a todo from the todo list.
      *
-     * @param Todo $todoList
-     * @return \Illuminate\Http\Response
+     * @param string $tuid
+     * @return JsonResponse
      */
-    public function show(Todo $todoList)
+    public function show(string $tuid): JsonResponse
     {
         try {
-
+            $todo = Todo::where('tuid', $tuid)->first();
+            return $this->successResponse(['Todo retrieve successfully done'], new TodoResource($todo));
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Todo $todoList
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Todo $todoList)
-    {
-        try {
-
-        } catch (\Exception $ex) {
-            Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
+            return $this->exceptionResponse(['Unable to store todo! please try again later']);
         }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateTodoRequest $request
-     * @param Todo $todoList
-     * @return \Illuminate\Http\Response
+     * @param UpdateTodoRequest $request
+     * @param string $tuid
+     * @return JsonResponse
      */
-    public function update(UpdateTodoRequest $request, Todo $todoList)
+    public function update(UpdateTodoRequest $request, string $tuid): JsonResponse
     {
         try {
-
+            $todo = Todo::where('tuid', $tuid)->first();
+            $todo->update([
+                'title' => $request->title,
+                'status' => $request->status,
+            ]);
+            return $this->successResponse(['Todo update successfully done'], new TodoResource($todo));
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
+            return $this->invalidResponse(['Unable to update todo! please try again later']);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Todo $todoList
+     * @param string $tuid
      * @return JsonResponse
      */
-    public function destroy(int $id)
+    public function destroy(string $tuid)
     {
         try {
-            $todoList = Todo::findOrFail($id);
-            $todoList->delete();
+            $todo = Todo::where('tuid', $tuid)->findOrFail();
+            $todo->delete();
             return $this->successResponse(['Todo delete successfully done']);
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
