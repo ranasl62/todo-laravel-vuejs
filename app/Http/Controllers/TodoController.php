@@ -8,7 +8,6 @@ use App\Http\Resources\TodoResource;
 use App\Models\Todo;
 use App\Traits\APIResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -24,8 +23,9 @@ class TodoController extends Controller
     public function index(): JsonResponse
     {
         try {
+            $todoList = Todo::select('title', 'status', 'tuid', 'created_at')->latest()->simplePaginate(10);
 
-            return $this->successResponse(['Todo list retrieve successfully done'], Todo::select('title', 'status', 'tuid')->paginate(10));
+            return $this->successResponse(['Todo list retrieve successfully done'], $todoList);
 
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
@@ -99,15 +99,35 @@ class TodoController extends Controller
      * @param string $tuid
      * @return JsonResponse
      */
-    public function destroy(string $tuid)
+    public function destroy(string $tuid): JsonResponse
     {
         try {
-            $todo = Todo::where('tuid', $tuid)->findOrFail();
+            $todo = Todo::where('tuid', $tuid)->firstOrFail();
             $todo->delete();
             return $this->successResponse(['Todo delete successfully done']);
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
             return $this->exceptionResponse(['Unable to delete todo! please try again later']);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param string $tuid
+     * @return JsonResponse
+     */
+    public function updateStatus(string $tuid): JsonResponse
+    {
+        try {
+            $todo = Todo::where('tuid', $tuid)->firstOrFail();
+            $todo->update([
+                'status' => !$todo->status,
+            ]);
+            return $this->successResponse(['Todo status update successfully done'], new TodoResource($todo));
+        } catch (\Exception $ex) {
+            Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
+            return $this->exceptionResponse(['Unable to todo status update! please try again later']);
         }
     }
 }

@@ -29,7 +29,7 @@ class UpdateTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:128',
+            'title' => 'required|string|min:3|max:128',
             'status' => 'required|boolean',
             'tuid' => 'required|exists:todos,tuid',
         ];

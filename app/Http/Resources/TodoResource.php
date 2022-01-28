@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +20,7 @@ class TodoResource extends JsonResource
             'title' => $this->title,
             'tuid' => $this->tuid,
             'status' => $this->status,
-            'created_at' => $this->create_at,
+            'created_at' => $this->created_at ?'': Carbon::createFromFormat('Y-m-d', $this->created_at),
         ];
     }
 }
