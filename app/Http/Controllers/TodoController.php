@@ -70,7 +70,7 @@ class TodoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Todo $todoList
+     * @param Todo $todoList
      * @return \Illuminate\Http\Response
      */
     public function show(Todo $todoList)
@@ -85,7 +85,7 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Todo $todoList
+     * @param Todo $todoList
      * @return \Illuminate\Http\Response
      */
     public function edit(Todo $todoList)
@@ -101,7 +101,7 @@ class TodoController extends Controller
      * Update the specified resource in storage.
      *
      * @param \App\Http\Requests\UpdateTodoRequest $request
-     * @param \App\Models\Todo $todoList
+     * @param Todo $todoList
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateTodoRequest $request, Todo $todoList)
@@ -116,15 +116,18 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Todo $todoList
-     * @return \Illuminate\Http\Response
+     * @param Todo $todoList
+     * @return JsonResponse
      */
-    public function destroy(Todo $todoList)
+    public function destroy(int $id)
     {
         try {
-
+            $todoList = Todo::findOrFail($id);
+            $todoList->delete();
+            return $this->successResponse(['Todo delete successfully done']);
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
+            return $this->exceptionResponse(['Unable to delete todo! please try again later']);
         }
     }
 }
