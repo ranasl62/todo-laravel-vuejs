@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
-class UpdateTodoListRequest extends FormRequest
+class UpdateTodoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,5 +31,18 @@ class UpdateTodoListRequest extends FormRequest
             'status' => 'required|boolean',
             'tuid' => 'required|exists:todolist,id',
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param Validator $validator
+     * @return JsonResponse
+     *
+     * @throws ValidationException
+     */
+    public function failedValidation(Validator $validator): JsonResponse
+    {
+        throw (new ValidationException($validator, $this->invalidResponse($validator->errors()->all())));
     }
 }

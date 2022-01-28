@@ -27,15 +27,14 @@ trait APIResponse
      * Invalid Request Response / Custom Validation Response
      *
      * @param array $message
-     * @param null $data
      * @return JsonResponse
      */
-    public function invalidResponse(array $message, $data = null): JsonResponse
+    public function invalidResponse(array $message): JsonResponse
     {
         return response()->json([
             'status' => 'failed',
             'message' => $message,
-            'data' => $data,
+            'data' => null,
         ], 422);
     }
 

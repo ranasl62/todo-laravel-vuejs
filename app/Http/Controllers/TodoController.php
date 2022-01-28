@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTodoListRequest;
-use App\Http\Requests\UpdateTodoListRequest;
+use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
+use App\Http\Resources\TodoResource;
 use App\Models\Todo;
 use App\Traits\APIResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
-class TodoListController extends Controller
+class TodoController extends Controller
 {
     use APIResponse;
 
@@ -23,7 +24,7 @@ class TodoListController extends Controller
     {
         try {
 
-            return $this->successResponse(['Todo list retrieve successfully done'], Todo::paginate(10));
+            return $this->successResponse(['Todo list retrieve successfully done'], Todo::select('title', 'status', 'tuid')->paginate(10));
 
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
@@ -48,15 +49,21 @@ class TodoListController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreTodoListRequest $request
-     * @return \Illuminate\Http\Response
+     * @param StoreTodoRequest $request
+     * @return JsonResponse
      */
-    public function store(StoreTodoListRequest $request)
+    public function store(StoreTodoRequest $request)
     {
         try {
-
+            $todo = Todo::create([
+                'title' => $request->title,
+                'tuid' => Str::uuid()->toString(),
+                'status' => $request->status,
+            ]);
+            return $this->successResponse(['Todo store successfully done'], new TodoResource($todo));
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
+            return $this->exceptionResponse(['Unable to store todo! please try again later']);
         }
     }
 
@@ -93,11 +100,11 @@ class TodoListController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\UpdateTodoListRequest $request
+     * @param \App\Http\Requests\UpdateTodoRequest $request
      * @param \App\Models\Todo $todoList
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTodoListRequest $request, Todo $todoList)
+    public function update(UpdateTodoRequest $request, Todo $todoList)
     {
         try {
 
