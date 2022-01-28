@@ -5,22 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTodoListRequest;
 use App\Http\Requests\UpdateTodoListRequest;
 use App\Models\Todo;
-use Illuminate\Http\Client\Response;
+use App\Traits\APIResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TodoListController extends Controller
 {
+    use APIResponse;
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index(): Response
+    public function index(): JsonResponse
     {
         try {
 
+            return $this->successResponse(['Todo list retrieve successfully done'], Todo::paginate(10));
+
         } catch (\Exception $ex) {
             Log::error('Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
+            return $this->invalidResponse(['Something went wrong! please try again later']);
         }
     }
 
