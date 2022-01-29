@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <div class="message">{}</div>
         <Header
             @toggle-add-task="toggleAddTask"
             title="Task Tracker"

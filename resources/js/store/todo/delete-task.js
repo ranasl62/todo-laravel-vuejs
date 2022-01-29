@@ -6,9 +6,10 @@ const deleteTasks = (context, tuid) => {
         httpClient('/api/v1/todo/' + tuid, 'DELETE').then(async response => {
             const res = await response.json();
             context.commit(type.DeleteTodoSetter, tuid);
+            context.commit(type.MessageSetter, {message: res.message, isSuccess: true});
         });
     } catch (e) {
-        context.commit(type.DeleteTodoSetter, null);
+        context.commit(type.MessageSetter, {message:"Unable to delete task! Please try again later",isSuccess: false});
     }
 }
 export default deleteTasks;

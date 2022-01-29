@@ -15,7 +15,7 @@ const type = {
     FetchTodoList: "todo/getter/fetch-todo-list",
 
     StatusUpdateTodoAction: "todo/action/status",
-    StatusUpdateTodoSetter: "todo/setter/status",
+    UpdateTodoSetter: "todo/update/status",
 
     AddTodoAction: "todo/action/store",
     UpdateTodoAction: "todo/action/update",
