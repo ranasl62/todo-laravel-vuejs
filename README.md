@@ -32,6 +32,7 @@ The following must be installed and available on your terminal:
 - Run `npm install && npm run dev` to install node.js dependencies and build the vuejs codes
 - Start your development server using laravel [command](https://laravel.com/docs/8.x/artisan) `php artisan serve --port 8000`
 - Visit on browser `localhost:8000`
+- [Postman Collection](https://www.getpostman.com/collections/dfed4cca97215af7861a)
 - Congratulations if you made it!
 
 Need helps? Reach me out
