@@ -1,14 +1,13 @@
 <template>
-    <form @submit.prevent="onSubmit" class="add-form" v-if="Boolean(getCurrentTodoData && getCurrentTodoData.title)">
+    <form @submit.prevent="onSubmit" class="add-form">
         <div class="form-control">
             <label>Task</label>
-            <input type="text" :value="getCurrentTodoData.title" name="title" placeholder="Add Task"/>
+            <input type="text" v-model="title" name="title" placeholder="Add Task"/>
         </div>
 
         <div class="form-control form-control-check">
             <label>Status</label>
-            <input type="checkbox" :value="Boolean(getCurrentTodoData.status)"
-                   :checked="Boolean(getCurrentTodoData.status)" name="status"/>
+            <input type="checkbox" v-model="status" name="status"/>
         </div>
 
         <input type="submit" :value="getCurrentTodoData? 'Update Task' : 'Save Task'" class="btn btn-block"/>
@@ -16,35 +15,48 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 import type from "../store/type";
 
 export default {
     name: 'AddTask',
+    data() {
+        return {
+            title: '',
+            status: false,
+            tuid: '',
+        }
+    },
     methods: {
+        ...mapMutations({
+            selectCurrentTaskMethod: type.CurrentTodoSetter,
+        }),
+
         onSubmit(e) {
-            const title = e.target.elements.title._value
-            const status = e.target.elements.status._value
-            if (!title) {
+            if (!this.title) {
                 alert('Please add a task')
                 return
             }
             if (this.getCurrentTodoData) {
                 this.updateTodoMethod({
-                    tuid: this.getCurrentTodoData.tuid,
+                    tuid: this.tuid,
                     body: {
-                        ...this.getCurrentTodoData,
-                        title,
-                        status,
+                        tuid: this.tuid,
+                        title: this.title,
+                        status: this.status,
                     }
                 });
             } else {
                 this.addTodoMethod({
-                    title,
-                    status,
+                    title: this.title,
+                    status: this.status,
                 });
-
             }
+
+            this.status = false;
+            this.title = '';
+            this.tuid = '';
+            this.selectCurrentTaskMethod(null);
 
         },
         ...mapActions({
@@ -57,6 +69,20 @@ export default {
             getCurrentTodoData: type.CurrentTodoGetter,
         }),
     },
+    watch: {
+        getCurrentTodoData(p, c) {
+            if (!c) {
+                this.title = p.title;
+                this.status = p.status;
+                this.tuid = p.tuid;
+            }
+            if (c && c.tuid !== this.tuid) {
+                this.title = c.title;
+                this.status = c.status;
+                this.tuid = c.tuid;
+            }
+        }
+    }
 }
 </script>
 

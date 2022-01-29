@@ -10,7 +10,7 @@
                 <i @click="deleteTask()" class="fas fa-times"></i>
             </span>
         </h3>
-        <p>{{ task.created_at }}</p>
+        <p>{{ new Date(task.created_at).toLocaleString() }}</p>
     </div>
 </template>
 

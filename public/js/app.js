@@ -5297,35 +5297,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'AddTask',
-  methods: _objectSpread({
+  data: function data() {
+    return {
+      title: '',
+      status: false,
+      tuid: ''
+    };
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapMutations)({
+    selectCurrentTaskMethod: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoSetter
+  })), {}, {
     onSubmit: function onSubmit(e) {
-      var title = e.target.elements.title._value;
-      var status = e.target.elements.status._value;
-
-      if (!title) {
+      if (!this.title) {
         alert('Please add a task');
         return;
       }
 
       if (this.getCurrentTodoData) {
         this.updateTodoMethod({
-          tuid: this.getCurrentTodoData.tuid,
-          body: _objectSpread(_objectSpread({}, this.getCurrentTodoData), {}, {
-            title: title,
-            status: status
-          })
+          tuid: this.tuid,
+          body: {
+            tuid: this.tuid,
+            title: this.title,
+            status: this.status
+          }
         });
       } else {
         this.addTodoMethod({
-          title: title,
-          status: status
+          title: this.title,
+          status: this.status
         });
       }
+
+      this.status = false;
+      this.title = '';
+      this.tuid = '';
+      this.selectCurrentTaskMethod(null);
     }
   }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
     addTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction,
@@ -5333,7 +5344,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     getCurrentTodoData: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoGetter
-  }))
+  })),
+  watch: {
+    getCurrentTodoData: function getCurrentTodoData(p, c) {
+      if (!c) {
+        this.title = p.title;
+        this.status = p.status;
+        this.tuid = p.tuid;
+      }
+
+      if (c && c.tuid !== this.tuid) {
+        this.title = c.title;
+        this.status = c.status;
+        this.tuid = c.tuid;
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -30779,50 +30805,92 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return Boolean(_vm.getCurrentTodoData && _vm.getCurrentTodoData.title)
-    ? _c(
-        "form",
-        {
-          staticClass: "add-form",
+  return _c(
+    "form",
+    {
+      staticClass: "add-form",
+      on: {
+        submit: function ($event) {
+          $event.preventDefault()
+          return _vm.onSubmit.apply(null, arguments)
+        },
+      },
+    },
+    [
+      _c("div", { staticClass: "form-control" }, [
+        _c("label", [_vm._v("Task")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.title,
+              expression: "title",
+            },
+          ],
+          attrs: { type: "text", name: "title", placeholder: "Add Task" },
+          domProps: { value: _vm.title },
           on: {
-            submit: function ($event) {
-              $event.preventDefault()
-              return _vm.onSubmit.apply(null, arguments)
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.title = $event.target.value
             },
           },
-        },
-        [
-          _c("div", { staticClass: "form-control" }, [
-            _c("label", [_vm._v("Task")]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "text", name: "title", placeholder: "Add Task" },
-              domProps: { value: _vm.getCurrentTodoData.title },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-control form-control-check" }, [
-            _c("label", [_vm._v("Status")]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "checkbox", name: "status" },
-              domProps: {
-                value: Boolean(_vm.getCurrentTodoData.status),
-                checked: Boolean(_vm.getCurrentTodoData.status),
-              },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "btn btn-block",
-            attrs: { type: "submit" },
-            domProps: {
-              value: _vm.getCurrentTodoData ? "Update Task" : "Save Task",
+        }),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-control form-control-check" }, [
+        _c("label", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.status,
+              expression: "status",
             },
-          }),
-        ]
-      )
-    : _vm._e()
+          ],
+          attrs: { type: "checkbox", name: "status" },
+          domProps: {
+            checked: Array.isArray(_vm.status)
+              ? _vm._i(_vm.status, null) > -1
+              : _vm.status,
+          },
+          on: {
+            change: function ($event) {
+              var $$a = _vm.status,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.status = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.status = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.status = $$c
+              }
+            },
+          },
+        }),
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "btn btn-block",
+        attrs: { type: "submit" },
+        domProps: {
+          value: _vm.getCurrentTodoData ? "Update Task" : "Save Task",
+        },
+      }),
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -30989,7 +31057,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.task.created_at))]),
+      _c("p", [_vm._v(_vm._s(new Date(_vm.task.created_at).toLocaleString()))]),
     ]
   )
 }

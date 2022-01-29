@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTodoRequest;
 use App\Http\Resources\TodoResource;
 use App\Models\Todo;
 use App\Traits\APIResponse;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -24,7 +25,6 @@ class TodoController extends Controller
     {
         try {
             $todoList = Todo::select('title', 'status', 'tuid', 'created_at')->latest()->simplePaginate(10);
-
             return $this->successResponse(['Todo list retrieve successfully done'], $todoList);
 
         } catch (\Exception $ex) {
