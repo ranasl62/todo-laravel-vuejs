@@ -6,7 +6,7 @@ const addTask = (context, payload) => {
         httpClient('/api/v1/todo', 'POST', payload).then(async response => {
             const res = await response.json();
             context.commit(type.TodoSetter, res.data);
-            context.commit(type.MessageSetter, {message: res.message, isSuccess: true});
+            context.commit(type.MessageSetter, {message: res.message[0], isSuccess: true});
         });
     } catch (e) {
         context.commit(type.MessageSetter, {message: "Unable to add task! Please try again later", isSuccess: false});

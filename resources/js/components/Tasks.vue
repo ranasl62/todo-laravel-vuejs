@@ -1,8 +1,7 @@
 <template>
     <div>
         <Task :key="task.id" v-for="task in tasks.data"
-              @toggle-status="$emit('toggle-status', task.tuid)"
-              @delete-task="$emit('delete-task', task.tuid)"
+              @toggle-add-task="$emit('toggle-add-task')"
               :task="task"
         />
         <div>
@@ -29,8 +28,7 @@ export default {
         Button,
         Task,
     },
-    emits: ['delete-task', 'toggle-status'],
-
+    emits: ['toggle-add-task'],
     computed: {
         ...mapGetters({
             tasks: type.TodoListGetter,

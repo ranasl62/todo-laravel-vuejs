@@ -5273,6 +5273,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/type */ "./resources/js/store/type.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -5289,6 +5297,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'AddTask',
   data: function data() {
@@ -5297,7 +5307,7 @@ __webpack_require__.r(__webpack_exports__);
       status: false
     };
   },
-  methods: {
+  methods: _objectSpread({
     onSubmit: function onSubmit(e) {
       e.preventDefault();
 
@@ -5306,15 +5316,19 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var newTask = {
+      this.addTodoMethod({
         title: this.title,
         status: this.status
-      };
-      this.$emit('add-task', newTask);
-      this.text = '';
+      });
+      this.title = '';
       this.status = false;
     }
-  }
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
+    addTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction
+  })),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+    getCurrentTodoData: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoGetter
+  }))
 });
 
 /***/ }),
@@ -5430,6 +5444,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5437,9 +5452,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: {
     task: Object
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)({
-    deleteTaskAction: _store_type__WEBPACK_IMPORTED_MODULE_1__["default"].DeleteTodoAction
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)({
+    deleteTaskAction: _store_type__WEBPACK_IMPORTED_MODULE_1__["default"].DeleteTodoAction,
+    statusUpdateTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_1__["default"].StatusUpdateTodoAction
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapMutations)({
+    selectCurrentTaskMethod: _store_type__WEBPACK_IMPORTED_MODULE_1__["default"].CurrentTodoSetter
   })), {}, {
+    statusUpdate: function statusUpdate() {
+      this.statusUpdateTodoMethod(this.task.tuid);
+    },
+    selectTask: function selectTask() {
+      this.selectCurrentTaskMethod(this.task);
+    },
     deleteTask: function deleteTask(tuid) {
       var _this = this;
 
@@ -5504,7 +5528,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -5515,7 +5538,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Button: _Button__WEBPACK_IMPORTED_MODULE_1__["default"],
     Task: _Task__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  emits: ['delete-task', 'toggle-status'],
+  emits: ['toggle-add-task'],
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
     tasks: _store_type__WEBPACK_IMPORTED_MODULE_2__["default"].TodoListGetter
   })),
@@ -5544,26 +5567,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
-/* harmony import */ var _components_Tasks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Tasks */ "./resources/js/components/Tasks.vue");
-/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Footer */ "./resources/js/components/Footer.vue");
-/* harmony import */ var _components_AddTask__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/AddTask */ "./resources/js/components/AddTask.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _store_type__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../store/type */ "./resources/js/store/type.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Header */ "./resources/js/components/Header.vue");
+/* harmony import */ var _components_Tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Tasks */ "./resources/js/components/Tasks.vue");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var _components_AddTask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/AddTask */ "./resources/js/components/AddTask.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_type__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/type */ "./resources/js/store/type.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -5588,14 +5607,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Home',
-  props: {
-    showAddTask: Boolean
-  },
+  props: {},
   components: {
-    Tasks: _components_Tasks__WEBPACK_IMPORTED_MODULE_2__["default"],
-    AddTask: _components_AddTask__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Header: _components_Header__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Tasks: _components_Tasks__WEBPACK_IMPORTED_MODULE_1__["default"],
+    AddTask: _components_AddTask__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Header: _components_Header__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -5603,54 +5620,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tasks: {}
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)({
-    currentTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].CurrentTodoAction,
-    addTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].AddTodoAction,
-    statusUpdateTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].StatusUpdateTodoAction
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapMutations)({
+    selectCurrentTaskMethod: _store_type__WEBPACK_IMPORTED_MODULE_4__["default"].CurrentTodoSetter,
+    setMessageMethod: _store_type__WEBPACK_IMPORTED_MODULE_4__["default"].MessageSetter
   })), {}, {
     toggleAddTask: function toggleAddTask() {
       this.showAddTask = !this.showAddTask;
+      this.selectCurrentTaskMethod(this.task);
     },
-    addTask: function addTask(task) {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.addTodoMethod(task);
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    toggleStatus: function toggleStatus(tuid) {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this2.statusUpdateTodoMethod(tuid);
-
-              case 1:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
+    deleteMessage: function deleteMessage() {
+      this.setMessageMethod({});
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)({
-    getTodoData: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].TodoGetter,
-    getCurrentTodoData: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].CurrentTodoGetter
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)({
+    getCurrentTodoData: _store_type__WEBPACK_IMPORTED_MODULE_4__["default"].CurrentTodoGetter,
+    getMessageData: _store_type__WEBPACK_IMPORTED_MODULE_4__["default"].MessageGetter
   }))
 });
 
@@ -5818,12 +5802,12 @@ vue__WEBPACK_IMPORTED_MODULE_7__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_8_
 var store = new vuex__WEBPACK_IMPORTED_MODULE_8__["default"].Store({
   state: {
     todoList: [],
-    currentTask: {},
+    currentTask: null,
     message: ''
   },
   getters: (_getters = {}, _defineProperty(_getters, _type__WEBPACK_IMPORTED_MODULE_0__["default"].TodoListGetter, function (state) {
     return state.todoList;
-  }), _defineProperty(_getters, _type__WEBPACK_IMPORTED_MODULE_0__["default"].TodoGetter, function (state) {
+  }), _defineProperty(_getters, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoGetter, function (state) {
     return state.currentTask;
   }), _defineProperty(_getters, _type__WEBPACK_IMPORTED_MODULE_0__["default"].MessageGetter, function (state) {
     return state.message;
@@ -5832,8 +5816,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_8__["default"].Store({
     state.todoList = payload;
   }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].MessageSetter, function (state, payload) {
     state.message = payload;
-  }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].TodoGetter, function (state, payload) {
-    state.currentTodoList = payload;
   }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].TodoSetter, function (state, payload) {
     state.todoList.data = [payload].concat(_toConsumableArray(state.todoList.data));
   }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoSetter, function (state, payload) {
@@ -5908,7 +5890,7 @@ var addTask = function addTask(context, payload) {
                 res = _context.sent;
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].TodoSetter, res.data);
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].MessageSetter, {
-                  message: res.message,
+                  message: res.message[0],
                   isSuccess: true
                 });
 
@@ -5976,7 +5958,7 @@ var deleteTasks = function deleteTasks(context, tuid) {
                 res = _context.sent;
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].DeleteTodoSetter, tuid);
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].MessageSetter, {
-                  message: res.message,
+                  message: res.message[0],
                   isSuccess: true
                 });
 
@@ -6108,7 +6090,7 @@ var fetchTasks = function fetchTasks(context, url) {
                 res = _context.sent;
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].TodoListSetter, res.data);
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].MessageSetter, {
-                  message: res.message,
+                  message: res.message[0],
                   isSuccess: true
                 });
 
@@ -6176,7 +6158,7 @@ var updateStatusTasks = function updateStatusTasks(context, tuid) {
                 res = _context.sent;
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].UpdateTodoSetter, res.data);
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].MessageSetter, {
-                  message: res.message,
+                  message: res.message[0],
                   isSuccess: true
                 });
 
@@ -6247,7 +6229,7 @@ var updateStatusTasks = function updateStatusTasks(context, _ref) {
                 res = _context.sent;
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].UpdateTodoSetter, res.data);
                 context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].MessageSetter, {
-                  message: res.message,
+                  message: res.message[0],
                   isSuccess: true
                 });
 
@@ -11352,7 +11334,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.add-form[data-v-f60e7faa] {\n  margin-bottom: 40px;\n}\n.form-control[data-v-f60e7faa] {\n  margin: 20px 0;\n}\n.form-control label[data-v-f60e7faa] {\n  display: block;\n}\n.form-control input[data-v-f60e7faa] {\n  width: 100%;\n  height: 40px;\n  margin: 5px;\n  padding: 3px 7px;\n  font-size: 17px;\n}\n.form-control-check[data-v-f60e7faa] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.form-control-check label[data-v-f60e7faa] {\n  flex: 1;\n}\n.form-control-check input[data-v-f60e7faa] {\n  flex: 2;\n  height: 20px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.add-form[data-v-f60e7faa] {\n    margin-bottom: 40px;\n}\n.form-control[data-v-f60e7faa] {\n    margin: 20px 0;\n}\n.form-control label[data-v-f60e7faa] {\n    display: block;\n}\n.form-control input[data-v-f60e7faa] {\n    width: 100%;\n    height: 40px;\n    margin: 5px;\n    padding: 3px 7px;\n    font-size: 17px;\n}\n.form-control-check[data-v-f60e7faa] {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n.form-control-check label[data-v-f60e7faa] {\n    flex: 1;\n}\n.form-control-check input[data-v-f60e7faa] {\n    flex: 2;\n    height: 20px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30789,7 +30771,8 @@ var render = function () {
     _vm._v(" "),
     _c("input", {
       staticClass: "btn btn-block",
-      attrs: { type: "submit", value: "Save Task" },
+      attrs: { type: "submit" },
+      domProps: { value: _vm.getCurrentTodoData ? "Update Task" : "Save Task" },
     }),
   ])
 }
@@ -30932,11 +30915,7 @@ var render = function () {
     "div",
     {
       class: [Boolean(_vm.task.status) ? "status" : "", "task"],
-      on: {
-        dblclick: function ($event) {
-          return _vm.$emit("toggle-status", _vm.task.tuid)
-        },
-      },
+      on: { dblclick: _vm.statusUpdate, click: _vm.selectTask },
     },
     [
       _c("h3", [
@@ -30986,11 +30965,8 @@ var render = function () {
           key: task.id,
           attrs: { task: task },
           on: {
-            "toggle-status": function ($event) {
-              return _vm.$emit("toggle-status", task.tuid)
-            },
-            "delete-task": function ($event) {
-              return _vm.$emit("delete-task", task.tuid)
+            "toggle-add-task": function ($event) {
+              return _vm.$emit("toggle-add-task")
             },
           },
         })
@@ -31064,7 +31040,37 @@ var render = function () {
     "div",
     { staticClass: "container" },
     [
-      _c("div", { staticClass: "message" }, [_vm._v("{}")]),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.getMessageData && _vm.getMessageData.message,
+              expression: "getMessageData && getMessageData.message",
+            },
+          ],
+          staticClass: "message",
+        },
+        [
+          _c("p", [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.getMessageData.message) +
+                "\n            "
+            ),
+            _c("i", {
+              staticClass: "fas fa-times",
+              on: {
+                click: function ($event) {
+                  return _vm.deleteMessage()
+                },
+              },
+            }),
+          ]),
+        ]
+      ),
       _vm._v(" "),
       _c("Header", {
         attrs: { title: "Task Tracker", showAddTask: _vm.showAddTask },
@@ -31076,14 +31082,13 @@ var render = function () {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.showAddTask,
-            expression: "showAddTask",
+            value: _vm.getCurrentTodoData || _vm.showAddTask,
+            expression: "getCurrentTodoData||showAddTask",
           },
         ],
-        on: { "add-task": _vm.addTask },
       }),
       _vm._v(" "),
-      _c("Tasks", { on: { "toggle-status": _vm.toggleStatus } }),
+      _c("Tasks"),
       _vm._v(" "),
       _c("Footer"),
     ],

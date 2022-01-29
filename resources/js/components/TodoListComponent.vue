@@ -1,14 +1,18 @@
 <template>
     <div class="container">
-        <div class="message">{}</div>
+        <div class="message" v-show="getMessageData && getMessageData.message">
+            <p>
+                {{ getMessageData.message }}
+                <i @click="deleteMessage()" class="fas fa-times"></i>
+            </p>
+        </div>
         <Header
             @toggle-add-task="toggleAddTask"
             title="Task Tracker"
             :showAddTask="showAddTask"
         />
-        <AddTask v-show="showAddTask" @add-task="addTask"/>
+        <AddTask v-show="getCurrentTodoData||showAddTask"/>
         <Tasks
-            @toggle-status="toggleStatus"
         />
         <Footer/>
     </div>
@@ -19,13 +23,12 @@ import Header from '../components/Header';
 import Tasks from '../components/Tasks';
 import Footer from '../components/Footer';
 import AddTask from '../components/AddTask';
-import {mapActions, mapGetters, mapMutations} from "vuex";
-import type from "./../store/type";
+import {mapGetters, mapMutations} from "vuex";
+import type from "../store/type";
 
 export default {
     name: 'Home',
     props: {
-        showAddTask: Boolean,
     },
     components: {
         Tasks,
@@ -40,27 +43,26 @@ export default {
         }
     },
     methods: {
-        ...mapActions({
-            currentTodoMethod: type.CurrentTodoAction,
-            addTodoMethod: type.AddTodoAction,
-            statusUpdateTodoMethod: type.StatusUpdateTodoAction
+        ...mapMutations({
+            selectCurrentTaskMethod: type.CurrentTodoSetter,
+            setMessageMethod: type.MessageSetter,
         }),
+
         toggleAddTask() {
-            this.showAddTask = !this.showAddTask
+            this.showAddTask = !this.showAddTask;
+            this.selectCurrentTaskMethod(this.task);
         },
-        async addTask(task) {
-            this.addTodoMethod(task);
-        },
-        async toggleStatus(tuid) {
-           this.statusUpdateTodoMethod(tuid);
-        },
+        deleteMessage() {
+            this.setMessageMethod({});
+        }
     },
     computed: {
         ...mapGetters({
-            getTodoData: type.TodoGetter,
             getCurrentTodoData: type.CurrentTodoGetter,
-        })
+            getMessageData: type.MessageGetter,
+        }),
     },
+
 }
 </script>
 

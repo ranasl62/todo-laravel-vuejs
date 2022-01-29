@@ -6,7 +6,7 @@ const fetchTasks = (context, url) => {
         httpClient(url || '/api/v1/todo', 'GET').then(async response => {
             const res = await response.json();
             context.commit(type.TodoListSetter, res.data);
-            context.commit(type.MessageSetter, {message: res.message, isSuccess: true});
+            context.commit(type.MessageSetter, {message: res.message[0], isSuccess: true});
 
         });
     } catch (e) {

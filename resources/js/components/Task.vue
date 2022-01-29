@@ -1,6 +1,7 @@
 <template>
     <div
-        @dblclick="$emit('toggle-status', task.tuid)"
+        @dblclick="statusUpdate"
+        @click="selectTask"
         :class="[Boolean(task.status) ? 'status' : '', 'task']"
     >
         <h3>
@@ -12,7 +13,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapMutations} from "vuex";
 import type from "../store/type";
 
 export default {
@@ -23,7 +24,17 @@ export default {
     methods: {
         ...mapActions({
             deleteTaskAction: type.DeleteTodoAction,
+            statusUpdateTodoMethod: type.StatusUpdateTodoAction,
         }),
+        ...mapMutations({
+            selectCurrentTaskMethod: type.CurrentTodoSetter,
+        }),
+        statusUpdate() {
+            this.statusUpdateTodoMethod(this.task.tuid);
+        },
+        selectTask() {
+            this.selectCurrentTaskMethod(this.task);
+        },
         async deleteTask(tuid) {
             if (confirm('Are you sure?')) {
                 this.deleteTaskAction(this.task.tuid);

@@ -13,7 +13,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         todoList: [],
-        currentTask: {},
+        currentTask: null,
         message: '',
     },
     getters: {
@@ -21,7 +21,7 @@ export const store = new Vuex.Store({
             return state.todoList;
         },
 
-        [type.TodoGetter]: (state) => {
+        [type.CurrentTodoGetter]: (state) => {
             return state.currentTask;
         },
 
@@ -36,10 +36,6 @@ export const store = new Vuex.Store({
 
         [type.MessageSetter]: (state, payload) => {
             state.message = payload;
-        },
-
-        [type.TodoGetter]: (state, payload) => {
-            state.currentTodoList = payload;
         },
         [type.TodoSetter]: (state, payload) => {
             state.todoList.data = [payload, ...state.todoList.data];

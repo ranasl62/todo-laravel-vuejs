@@ -6,7 +6,7 @@ const updateStatusTasks = (context, tuid) => {
         httpClient('/api/v1/todo/status/' + tuid, 'PUT').then(async response => {
             const res = await response.json();
             context.commit(type.UpdateTodoSetter, res.data);
-            context.commit(type.MessageSetter, {message: res.message, isSuccess: true});
+            context.commit(type.MessageSetter, {message: res.message[0], isSuccess: true});
         });
     } catch (e) {
         context.commit(type.MessageSetter, {
