@@ -4,14 +4,14 @@
               @toggle-add-task="$emit('toggle-add-task')"
               :task="task"
         />
-        <div>
+        <div class="pagination">
             <Button :color="'primary'" :text="'<<'"
                     @btn-click="loadPage(tasks.prev_page_url)"
-                    :class-names="['primary',Boolean(tasks.prev_page_url)?'':'disabled']"></Button>
+                    :class-names="['primary', Boolean(tasks.prev_page_url)?'':'disabled']"></Button>
 
             <Button :color="'primary'" :text="'>>'"
                     @btn-click="loadPage(tasks.next_page_url)"
-                    :class-names="['primary',Boolean(tasks.next_page_url)?'':'disabled']"></Button>
+                    :class-names="['primary', Boolean(tasks.next_page_url)?'':'disabled']"></Button>
         </div>
     </div>
 </template>
@@ -48,3 +48,12 @@ export default {
     },
 }
 </script>
+
+<style>
+.float-right{
+    float: right;
+}
+.pagination{
+    justify-content: flex-end;
+}
+</style>

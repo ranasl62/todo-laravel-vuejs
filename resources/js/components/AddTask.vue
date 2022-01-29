@@ -1,13 +1,14 @@
 <template>
-    <form @submit="onSubmit" class="add-form">
+    <form @submit.prevent="onSubmit" class="add-form" v-if="Boolean(getCurrentTodoData && getCurrentTodoData.title)">
         <div class="form-control">
             <label>Task</label>
-            <input type="text" v-model="title" name="text" placeholder="Add Task"/>
+            <input type="text" :value="getCurrentTodoData.title" name="title" placeholder="Add Task"/>
         </div>
 
         <div class="form-control form-control-check">
             <label>Status</label>
-            <input type="checkbox" v-model="status" name="status"/>
+            <input type="checkbox" :value="Boolean(getCurrentTodoData.status)"
+                   :checked="Boolean(getCurrentTodoData.status)" name="status"/>
         </div>
 
         <input type="submit" :value="getCurrentTodoData? 'Update Task' : 'Save Task'" class="btn btn-block"/>
@@ -20,31 +21,35 @@ import type from "../store/type";
 
 export default {
     name: 'AddTask',
-    data() {
-        return {
-            title: '',
-            status: false,
-        }
-    },
     methods: {
         onSubmit(e) {
-            e.preventDefault()
-
-            if (!this.title) {
+            const title = e.target.elements.title._value
+            const status = e.target.elements.status._value
+            if (!title) {
                 alert('Please add a task')
                 return
             }
+            if (this.getCurrentTodoData) {
+                this.updateTodoMethod({
+                    tuid: this.getCurrentTodoData.tuid,
+                    body: {
+                        ...this.getCurrentTodoData,
+                        title,
+                        status,
+                    }
+                });
+            } else {
+                this.addTodoMethod({
+                    title,
+                    status,
+                });
 
-            this.addTodoMethod({
-                title: this.title,
-                status: this.status,
-            });
+            }
 
-            this.title = ''
-            this.status = false
         },
         ...mapActions({
             addTodoMethod: type.AddTodoAction,
+            updateTodoMethod: type.UpdateTodoAction,
         }),
     },
     computed: {

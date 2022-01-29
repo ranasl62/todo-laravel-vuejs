@@ -1,12 +1,14 @@
 <template>
     <div
         @dblclick="statusUpdate"
-        @click="selectTask"
         :class="[Boolean(task.status) ? 'status' : '', 'task']"
     >
         <h3>
             {{ task.title }}
-            <i @click="deleteTask()" class="fas fa-times"></i>
+            <span>
+                <i @click="editTask()" class="fas fa-edit"></i>
+                <i @click="deleteTask()" class="fas fa-times"></i>
+            </span>
         </h3>
         <p>{{ task.created_at }}</p>
     </div>
@@ -32,7 +34,7 @@ export default {
         statusUpdate() {
             this.statusUpdateTodoMethod(this.task.tuid);
         },
-        selectTask() {
+        editTask(){
             this.selectCurrentTaskMethod(this.task);
         },
         async deleteTask(tuid) {
@@ -64,5 +66,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.fa-edit{
+    color:black;
+    padding-right: 2px;
 }
 </style>

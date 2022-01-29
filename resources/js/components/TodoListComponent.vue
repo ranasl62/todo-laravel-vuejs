@@ -1,15 +1,15 @@
 <template>
     <div class="container">
-        <div class="message" v-show="getMessageData && getMessageData.message">
-            <p>
+        <div :class="getMessageData.isSuccess?'messageSuccess':'messageFailed'" v-show="getMessageData && getMessageData.message">
+            <p class="message">
                 {{ getMessageData.message }}
-                <i @click="deleteMessage()" class="fas fa-times"></i>
+                <i @click="deleteMessage()" class="fas fa-times delete"></i>
             </p>
         </div>
         <Header
             @toggle-add-task="toggleAddTask"
             title="Task Tracker"
-            :showAddTask="showAddTask"
+            :showAddTask="Boolean(getCurrentTodoData)||showAddTask"
         />
         <AddTask v-show="getCurrentTodoData||showAddTask"/>
         <Tasks
@@ -28,8 +28,7 @@ import type from "../store/type";
 
 export default {
     name: 'Home',
-    props: {
-    },
+    props: {},
     components: {
         Tasks,
         AddTask,
@@ -50,7 +49,7 @@ export default {
 
         toggleAddTask() {
             this.showAddTask = !this.showAddTask;
-            this.selectCurrentTaskMethod(this.task);
+            this.selectCurrentTaskMethod(null);
         },
         deleteMessage() {
             this.setMessageMethod({});
@@ -111,8 +110,29 @@ body {
     transform: scale(0.98);
 }
 
+.btn:hover {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+}
+
 .btn-block {
     display: block;
     width: 100%;
+}
+
+.messageSuccess {
+    background: #68eecc8f;
+}
+.messageFailed {
+    background: #e2321166;
+}
+.delete{
+    float: right;
+    color: red;
+    padding: 4px;
+}
+.message {
+    padding: 5px;
 }
 </style>

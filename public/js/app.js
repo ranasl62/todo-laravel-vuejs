@@ -5297,34 +5297,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'AddTask',
-  data: function data() {
-    return {
-      title: '',
-      status: false
-    };
-  },
   methods: _objectSpread({
     onSubmit: function onSubmit(e) {
-      e.preventDefault();
+      var title = e.target.elements.title._value;
+      var status = e.target.elements.status._value;
 
-      if (!this.title) {
+      if (!title) {
         alert('Please add a task');
         return;
       }
 
-      this.addTodoMethod({
-        title: this.title,
-        status: this.status
-      });
-      this.title = '';
-      this.status = false;
+      if (this.getCurrentTodoData) {
+        this.updateTodoMethod({
+          tuid: this.getCurrentTodoData.tuid,
+          body: _objectSpread(_objectSpread({}, this.getCurrentTodoData), {}, {
+            title: title,
+            status: status
+          })
+        });
+      } else {
+        this.addTodoMethod({
+          title: title,
+          status: status
+        });
+      }
     }
   }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
-    addTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction
+    addTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction,
+    updateTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].UpdateTodoAction
   })),
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     getCurrentTodoData: _store_type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoGetter
@@ -5445,6 +5450,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5461,7 +5468,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     statusUpdate: function statusUpdate() {
       this.statusUpdateTodoMethod(this.task.tuid);
     },
-    selectTask: function selectTask() {
+    editTask: function editTask() {
       this.selectCurrentTaskMethod(this.task);
     },
     deleteTask: function deleteTask(tuid) {
@@ -5626,7 +5633,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     toggleAddTask: function toggleAddTask() {
       this.showAddTask = !this.showAddTask;
-      this.selectCurrentTaskMethod(this.task);
+      this.selectCurrentTaskMethod(null);
     },
     deleteMessage: function deleteMessage() {
       this.setMessageMethod({});
@@ -11406,7 +11413,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fas {\n    color: red;\n}\n.task {\n    background: #f4f4f4;\n    margin: 5px;\n    padding: 10px 20px;\n    cursor: pointer;\n}\n.task.status {\n    border-left: 5px solid green;\n}\n.task h3 {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fas {\n    color: red;\n}\n.task {\n    background: #f4f4f4;\n    margin: 5px;\n    padding: 10px 20px;\n    cursor: pointer;\n}\n.task.status {\n    border-left: 5px solid green;\n}\n.task h3 {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n.fa-edit{\n    color:black;\n    padding-right: 2px;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.float-right{\n    float: right;\n}\n.pagination{\n    justify-content: flex-end;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11431,7 +11462,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n}\nbody {\n    font-family: 'Poppins', sans-serif;\n}\n.container {\n    max-width: 500px;\n    margin: 30px auto;\n    overflow: auto;\n    min-height: 300px;\n    border: 1px solid steelblue;\n    padding: 30px;\n    border-radius: 5px;\n}\n.btn {\n    display: inline-block;\n    background: #000;\n    color: #fff;\n    border: none;\n    padding: 10px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    cursor: pointer;\n    text-decoration: none;\n    font-size: 15px;\n    font-family: inherit;\n}\n.btn:focus {\n    outline: none;\n}\n.btn:active {\n    transform: scale(0.98);\n}\n.btn-block {\n    display: block;\n    width: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n* {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n}\nbody {\n    font-family: 'Poppins', sans-serif;\n}\n.container {\n    max-width: 500px;\n    margin: 30px auto;\n    overflow: auto;\n    min-height: 300px;\n    border: 1px solid steelblue;\n    padding: 30px;\n    border-radius: 5px;\n}\n.btn {\n    display: inline-block;\n    background: #000;\n    color: #fff;\n    border: none;\n    padding: 10px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    cursor: pointer;\n    text-decoration: none;\n    font-size: 15px;\n    font-family: inherit;\n}\n.btn:focus {\n    outline: none;\n}\n.btn:active {\n    transform: scale(0.98);\n}\n.btn:hover {\n    color: black;\n    background-color: white;\n    border: 1px solid black;\n}\n.btn-block {\n    display: block;\n    width: 100%;\n}\n.messageSuccess {\n    background: #68eecc8f;\n}\n.messageFailed {\n    background: #e2321166;\n}\n.delete{\n    float: right;\n    color: red;\n    padding: 4px;\n}\n.message {\n    padding: 5px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29817,6 +29848,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tasks.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TodoListComponent.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/TodoListComponent.vue?vue&type=style&index=0&lang=css& ***!
@@ -30340,15 +30401,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Tasks_vue_vue_type_template_id_43ab059a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tasks.vue?vue&type=template&id=43ab059a& */ "./resources/js/components/Tasks.vue?vue&type=template&id=43ab059a&");
 /* harmony import */ var _Tasks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tasks.vue?vue&type=script&lang=js& */ "./resources/js/components/Tasks.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Tasks_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tasks.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Tasks_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Tasks_vue_vue_type_template_id_43ab059a___WEBPACK_IMPORTED_MODULE_0__.render,
   _Tasks_vue_vue_type_template_id_43ab059a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -30555,6 +30618,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tasks.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Tasks.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/TodoListComponent.vue?vue&type=style&index=0&lang=css&":
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/TodoListComponent.vue?vue&type=style&index=0&lang=css& ***!
@@ -30703,78 +30779,50 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", { staticClass: "add-form", on: { submit: _vm.onSubmit } }, [
-    _c("div", { staticClass: "form-control" }, [
-      _c("label", [_vm._v("Task")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.title,
-            expression: "title",
-          },
-        ],
-        attrs: { type: "text", name: "text", placeholder: "Add Task" },
-        domProps: { value: _vm.title },
-        on: {
-          input: function ($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.title = $event.target.value
+  return Boolean(_vm.getCurrentTodoData && _vm.getCurrentTodoData.title)
+    ? _c(
+        "form",
+        {
+          staticClass: "add-form",
+          on: {
+            submit: function ($event) {
+              $event.preventDefault()
+              return _vm.onSubmit.apply(null, arguments)
+            },
           },
         },
-      }),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-control form-control-check" }, [
-      _c("label", [_vm._v("Status")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.status,
-            expression: "status",
-          },
-        ],
-        attrs: { type: "checkbox", name: "status" },
-        domProps: {
-          checked: Array.isArray(_vm.status)
-            ? _vm._i(_vm.status, null) > -1
-            : _vm.status,
-        },
-        on: {
-          change: function ($event) {
-            var $$a = _vm.status,
-              $$el = $event.target,
-              $$c = $$el.checked ? true : false
-            if (Array.isArray($$a)) {
-              var $$v = null,
-                $$i = _vm._i($$a, $$v)
-              if ($$el.checked) {
-                $$i < 0 && (_vm.status = $$a.concat([$$v]))
-              } else {
-                $$i > -1 &&
-                  (_vm.status = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
-              }
-            } else {
-              _vm.status = $$c
-            }
-          },
-        },
-      }),
-    ]),
-    _vm._v(" "),
-    _c("input", {
-      staticClass: "btn btn-block",
-      attrs: { type: "submit" },
-      domProps: { value: _vm.getCurrentTodoData ? "Update Task" : "Save Task" },
-    }),
-  ])
+        [
+          _c("div", { staticClass: "form-control" }, [
+            _c("label", [_vm._v("Task")]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "text", name: "title", placeholder: "Add Task" },
+              domProps: { value: _vm.getCurrentTodoData.title },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control form-control-check" }, [
+            _c("label", [_vm._v("Status")]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { type: "checkbox", name: "status" },
+              domProps: {
+                value: Boolean(_vm.getCurrentTodoData.status),
+                checked: Boolean(_vm.getCurrentTodoData.status),
+              },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "btn btn-block",
+            attrs: { type: "submit" },
+            domProps: {
+              value: _vm.getCurrentTodoData ? "Update Task" : "Save Task",
+            },
+          }),
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -30915,19 +30963,30 @@ var render = function () {
     "div",
     {
       class: [Boolean(_vm.task.status) ? "status" : "", "task"],
-      on: { dblclick: _vm.statusUpdate, click: _vm.selectTask },
+      on: { dblclick: _vm.statusUpdate },
     },
     [
       _c("h3", [
         _vm._v("\n        " + _vm._s(_vm.task.title) + "\n        "),
-        _c("i", {
-          staticClass: "fas fa-times",
-          on: {
-            click: function ($event) {
-              return _vm.deleteTask()
+        _c("span", [
+          _c("i", {
+            staticClass: "fas fa-edit",
+            on: {
+              click: function ($event) {
+                return _vm.editTask()
+              },
             },
-          },
-        }),
+          }),
+          _vm._v(" "),
+          _c("i", {
+            staticClass: "fas fa-times",
+            on: {
+              click: function ($event) {
+                return _vm.deleteTask()
+              },
+            },
+          }),
+        ]),
       ]),
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.task.created_at))]),
@@ -30974,6 +31033,7 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
+        { staticClass: "pagination" },
         [
           _c("Button", {
             attrs: {
@@ -31051,17 +31111,19 @@ var render = function () {
               expression: "getMessageData && getMessageData.message",
             },
           ],
-          staticClass: "message",
+          class: _vm.getMessageData.isSuccess
+            ? "messageSuccess"
+            : "messageFailed",
         },
         [
-          _c("p", [
+          _c("p", { staticClass: "message" }, [
             _vm._v(
               "\n            " +
                 _vm._s(_vm.getMessageData.message) +
                 "\n            "
             ),
             _c("i", {
-              staticClass: "fas fa-times",
+              staticClass: "fas fa-times delete",
               on: {
                 click: function ($event) {
                   return _vm.deleteMessage()
@@ -31073,7 +31135,10 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("Header", {
-        attrs: { title: "Task Tracker", showAddTask: _vm.showAddTask },
+        attrs: {
+          title: "Task Tracker",
+          showAddTask: Boolean(_vm.getCurrentTodoData) || _vm.showAddTask,
+        },
         on: { "toggle-add-task": _vm.toggleAddTask },
       }),
       _vm._v(" "),
