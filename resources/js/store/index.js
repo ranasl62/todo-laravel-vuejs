@@ -53,8 +53,8 @@ export const store = new Vuex.Store({
         [type.AddTodoAction]: (context, payload) => {
             addTask(context, payload);
         },
-        [type.FetchTodoList]: (context) => {
-            fetchTasks(context);
+        [type.FetchTodoList]: (context, payload) => {
+            fetchTasks(context,payload);
         },
         [type.CurrentTodoAction]: (context, payload) => {
             fetchTask(context, payload);

@@ -5340,7 +5340,8 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Button',
   props: {
     text: String,
-    color: String
+    color: String,
+    classNames: Array
   },
   methods: {
     onClick: function onClick() {
@@ -5434,6 +5435,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Task */ "./resources/js/components/Task.vue");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button */ "./resources/js/components/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/type */ "./resources/js/store/type.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5445,18 +5464,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Tasks',
-  props: {
-    tasks: Object
-  },
   components: {
+    Button: _Button__WEBPACK_IMPORTED_MODULE_1__["default"],
     Task: _Task__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  emits: ['delete-task', 'toggle-status'],
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
+    tasks: _store_type__WEBPACK_IMPORTED_MODULE_2__["default"].TodoListGetter
+  })),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)({
+    fetchTodoListMethod: _store_type__WEBPACK_IMPORTED_MODULE_2__["default"].FetchTodoList
+  })), {}, {
+    loadPage: function loadPage(url) {
+      this.fetchTodoListMethod(url);
+    }
+  }),
   mounted: function mounted() {
-    console.log(this.tasks);
-  },
-  emits: ['delete-task', 'toggle-status']
+    this.fetchTodoListMethod();
+  }
 });
 
 /***/ }),
@@ -5508,7 +5538,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -5533,7 +5562,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapActions)({
-    fetchTodoListMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].FetchTodoList,
     currentTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].CurrentTodoAction,
     addTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].AddTodoAction,
     statusUpdateTodoMethod: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].StatusUpdateTodoAction
@@ -5611,11 +5639,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     }
   }),
-  mounted: function mounted() {
-    this.fetchTodoListMethod();
-  },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapGetters)({
-    getTodoListData: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].TodoListGetter,
     getTodoData: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].TodoGetter,
     getCurrentTodoData: _store_type__WEBPACK_IMPORTED_MODULE_5__["default"].CurrentTodoGetter
   }))
@@ -5808,8 +5832,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_6__["default"].Store({
   }), _mutations),
   actions: (_actions = {}, _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction, function (context, payload) {
     (0,_todo_add_task__WEBPACK_IMPORTED_MODULE_1__["default"])(context, payload);
-  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].FetchTodoList, function (context) {
-    (0,_todo_fetch_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(context);
+  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].FetchTodoList, function (context, payload) {
+    (0,_todo_fetch_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(context, payload);
   }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoAction, function (context, payload) {
     (0,_todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__["default"])(context, payload);
   }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].StatusUpdateTodoAction, function (context, payload) {
@@ -5958,9 +5982,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-var fetchTasks = function fetchTasks(context) {
-  console.log("rana");
-  (0,_lib_httpClient__WEBPACK_IMPORTED_MODULE_1__["default"])('/api/v1/todo', 'GET').then( /*#__PURE__*/function () {
+var fetchTasks = function fetchTasks(context, url) {
+  (0,_lib_httpClient__WEBPACK_IMPORTED_MODULE_1__["default"])(url || '/api/v1/todo', 'GET').then( /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
       var res;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -30592,7 +30615,7 @@ var render = function () {
   return _c(
     "button",
     {
-      staticClass: "btn",
+      class: ["btn"].concat(_vm.classNames || []),
       style: { background: _vm.color },
       on: {
         click: function ($event) {
@@ -30600,7 +30623,7 @@ var render = function () {
         },
       },
     },
-    [_vm._v("\n  " + _vm._s(_vm.text) + "\n")]
+    [_vm._v("\n    " + _vm._s(_vm.text) + "\n")]
   )
 }
 var staticRenderFns = []
@@ -30753,21 +30776,61 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.tasks.data, function (task) {
-      return _c("Task", {
-        key: task.id,
-        attrs: { task: task },
-        on: {
-          "toggle-status": function ($event) {
-            return _vm.$emit("toggle-status", task.tuid)
+    [
+      _vm._l(_vm.tasks.data, function (task) {
+        return _c("Task", {
+          key: task.id,
+          attrs: { task: task },
+          on: {
+            "toggle-status": function ($event) {
+              return _vm.$emit("toggle-status", task.tuid)
+            },
+            "delete-task": function ($event) {
+              return _vm.$emit("delete-task", task.tuid)
+            },
           },
-          "delete-task": function ($event) {
-            return _vm.$emit("delete-task", task.tuid)
-          },
-        },
-      })
-    }),
-    1
+        })
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c("Button", {
+            attrs: {
+              color: "primary",
+              text: "<<",
+              "class-names": [
+                "primary",
+                Boolean(_vm.tasks.prev_page_url) ? "" : "disabled",
+              ],
+            },
+            on: {
+              "btn-click": function ($event) {
+                return _vm.loadPage(_vm.tasks.prev_page_url)
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c("Button", {
+            attrs: {
+              color: "primary",
+              text: ">>",
+              "class-names": [
+                "primary",
+                Boolean(_vm.tasks.next_page_url) ? "" : "disabled",
+              ],
+            },
+            on: {
+              "btn-click": function ($event) {
+                return _vm.loadPage(_vm.tasks.next_page_url)
+              },
+            },
+          }),
+        ],
+        1
+      ),
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -30815,7 +30878,6 @@ var render = function () {
       }),
       _vm._v(" "),
       _c("Tasks", {
-        attrs: { tasks: _vm.getTodoListData },
         on: {
           "toggle-status": _vm.toggleStatus,
           "delete-task": _vm.deleteTask,

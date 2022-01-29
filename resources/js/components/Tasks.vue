@@ -5,23 +5,48 @@
               @delete-task="$emit('delete-task', task.tuid)"
               :task="task"
         />
+        <div>
+            <Button :color="'primary'" :text="'<<'"
+                    @btn-click="loadPage(tasks.prev_page_url)"
+                    :class-names="['primary',Boolean(tasks.prev_page_url)?'':'disabled']"></Button>
+
+            <Button :color="'primary'" :text="'>>'"
+                    @btn-click="loadPage(tasks.next_page_url)"
+                    :class-names="['primary',Boolean(tasks.next_page_url)?'':'disabled']"></Button>
+        </div>
     </div>
 </template>
 
 <script>
 import Task from './Task'
+import Button from "./Button";
+import {mapActions, mapGetters} from "vuex";
+import type from "../store/type";
 
 export default {
     name: 'Tasks',
-    props: {
-        tasks: Object,
-    },
     components: {
+        Button,
         Task,
     },
-    mounted() {
-        console.log(this.tasks);
-    },
     emits: ['delete-task', 'toggle-status'],
+
+    computed: {
+        ...mapGetters({
+            tasks: type.TodoListGetter,
+        })
+    },
+    methods: {
+        ...mapActions({
+            fetchTodoListMethod: type.FetchTodoList,
+        }),
+
+        loadPage(url) {
+            this.fetchTodoListMethod(url);
+        },
+    },
+    mounted() {
+        this.fetchTodoListMethod();
+    },
 }
 </script>

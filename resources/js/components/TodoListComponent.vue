@@ -9,7 +9,6 @@
         <Tasks
             @toggle-status="toggleStatus"
             @delete-task="deleteTask"
-            :tasks="getTodoListData"
         />
         <Footer/>
     </div>
@@ -42,7 +41,6 @@ export default {
     },
     methods: {
         ...mapActions({
-            fetchTodoListMethod: type.FetchTodoList,
             currentTodoMethod: type.CurrentTodoAction,
             addTodoMethod: type.AddTodoAction,
             statusUpdateTodoMethod: type.StatusUpdateTodoAction
@@ -67,12 +65,8 @@ export default {
            this.statusUpdateTodoMethod(tuid);
         },
     },
-    mounted() {
-        this.fetchTodoListMethod();
-    },
     computed: {
         ...mapGetters({
-            getTodoListData: type.TodoListGetter,
             getTodoData: type.TodoGetter,
             getCurrentTodoData: type.CurrentTodoGetter,
         })
