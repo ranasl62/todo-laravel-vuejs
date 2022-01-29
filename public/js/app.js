@@ -31099,44 +31099,46 @@ var render = function () {
         })
       }),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "pagination" },
-        [
-          _c("Button", {
-            attrs: {
-              color: "primary",
-              text: "<<",
-              "class-names": [
-                "primary",
-                Boolean(_vm.tasks.prev_page_url) ? "" : "disabled",
-              ],
-            },
-            on: {
-              "btn-click": function ($event) {
-                return _vm.loadPage(_vm.tasks.prev_page_url)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _c("Button", {
-            attrs: {
-              color: "primary",
-              text: ">>",
-              "class-names": [
-                "primary",
-                Boolean(_vm.tasks.next_page_url) ? "" : "disabled",
-              ],
-            },
-            on: {
-              "btn-click": function ($event) {
-                return _vm.loadPage(_vm.tasks.next_page_url)
-              },
-            },
-          }),
-        ],
-        1
-      ),
+      _vm.tasks.data.length
+        ? _c(
+            "div",
+            { staticClass: "pagination" },
+            [
+              _c("Button", {
+                attrs: {
+                  color: "primary",
+                  text: "<<",
+                  "class-names": [
+                    "primary",
+                    Boolean(_vm.tasks.prev_page_url) ? "" : "disabled",
+                  ],
+                },
+                on: {
+                  "btn-click": function ($event) {
+                    return _vm.loadPage(_vm.tasks.prev_page_url)
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _c("Button", {
+                attrs: {
+                  color: "primary",
+                  text: ">>",
+                  "class-names": [
+                    "primary",
+                    Boolean(_vm.tasks.next_page_url) ? "" : "disabled",
+                  ],
+                },
+                on: {
+                  "btn-click": function ($event) {
+                    return _vm.loadPage(_vm.tasks.next_page_url)
+                  },
+                },
+              }),
+            ],
+            1
+          )
+        : _vm._e(),
     ],
     2
   )

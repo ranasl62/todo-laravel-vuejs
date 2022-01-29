@@ -4,7 +4,7 @@
               @toggle-add-task="$emit('toggle-add-task')"
               :task="task"
         />
-        <div class="pagination">
+        <div class="pagination" v-if="tasks.data.length">
             <Button :color="'primary'" :text="'<<'"
                     @btn-click="loadPage(tasks.prev_page_url)"
                     :class-names="['primary', Boolean(tasks.prev_page_url)?'':'disabled']"></Button>

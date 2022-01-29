@@ -24,7 +24,7 @@ class TodoController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $todoList = Todo::select('title', 'status', 'tuid', 'created_at')->latest()->simplePaginate(10);
+            $todoList = Todo::select('title', 'status', 'tuid', 'created_at')->latest()->simplePaginate(5);
             return $this->successResponse(['Todo list retrieve successfully done'], $todoList);
 
         } catch (\Exception $ex) {
