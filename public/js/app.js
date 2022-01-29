@@ -5401,6 +5401,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_type__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/type */ "./resources/js/store/type.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -5414,11 +5430,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Task',
   props: {
     task: Object
-  }
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)({
+    deleteTaskAction: _store_type__WEBPACK_IMPORTED_MODULE_1__["default"].DeleteTodoAction
+  })), {}, {
+    deleteTask: function deleteTask(tuid) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (confirm('Are you sure?')) {
+                  _this.deleteTaskAction(_this.task.tuid);
+                }
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  })
 });
 
 /***/ }),
@@ -5537,7 +5579,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -5587,55 +5628,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee);
       }))();
     },
-    deleteTask: function deleteTask(tuid) {
+    toggleStatus: function toggleStatus(tuid) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!confirm('Are you sure?')) {
-                  _context2.next = 5;
-                  break;
-                }
+                _this2.statusUpdateTodoMethod(tuid);
 
-                _context2.next = 3;
-                return fetch("/api/v1/todo/".concat(tuid), {
-                  method: 'DELETE'
-                });
-
-              case 3:
-                res = _context2.sent;
-                res.status === 200 ? _this2.tasks = _this2.tasks.filter(function (task) {
-                  return task.tuid !== tuid;
-                }) : alert('Error deleting task');
-
-              case 5:
+              case 1:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
-      }))();
-    },
-    toggleStatus: function toggleStatus(tuid) {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _this3.statusUpdateTodoMethod(tuid);
-
-              case 1:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
       }))();
     }
   }),
@@ -5771,13 +5779,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "store": () => (/* binding */ store)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _type__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./type */ "./resources/js/store/type.js");
 /* harmony import */ var _todo_add_task__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo/add-task */ "./resources/js/store/todo/add-task.js");
 /* harmony import */ var _todo_fetch_tasks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./todo/fetch-tasks */ "./resources/js/store/todo/fetch-tasks.js");
 /* harmony import */ var _todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./todo/fetch-task */ "./resources/js/store/todo/fetch-task.js");
 /* harmony import */ var _todo_update_status_task__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./todo/update-status-task */ "./resources/js/store/todo/update-status-task.js");
+/* harmony import */ var _todo_delete_task__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./todo/delete-task */ "./resources/js/store/todo/delete-task.js");
 var _getters, _mutations, _actions;
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -5801,8 +5810,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_5__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_6__["default"]);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_6__["default"].Store({
+
+vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_7__["default"]);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_7__["default"].Store({
   state: {
     todoList: [],
     currentTask: {},
@@ -5829,15 +5839,21 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_6__["default"].Store({
     state.todoList.data = state.todoList.data.map(function (task) {
       return payload.tuid === task.tuid ? payload : task;
     });
+  }), _defineProperty(_mutations, _type__WEBPACK_IMPORTED_MODULE_0__["default"].DeleteTodoSetter, function (state, tuid) {
+    state.todoList.data = state.todoList.data.filter(function (task) {
+      return tuid !== task.tuid;
+    });
   }), _mutations),
   actions: (_actions = {}, _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].AddTodoAction, function (context, payload) {
     (0,_todo_add_task__WEBPACK_IMPORTED_MODULE_1__["default"])(context, payload);
   }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].FetchTodoList, function (context, payload) {
     (0,_todo_fetch_tasks__WEBPACK_IMPORTED_MODULE_2__["default"])(context, payload);
-  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoAction, function (context, payload) {
-    (0,_todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__["default"])(context, payload);
-  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].StatusUpdateTodoAction, function (context, payload) {
-    (0,_todo_update_status_task__WEBPACK_IMPORTED_MODULE_4__["default"])(context, payload);
+  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].CurrentTodoAction, function (context, tuid) {
+    (0,_todo_fetch_task__WEBPACK_IMPORTED_MODULE_3__["default"])(context, tuid);
+  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].StatusUpdateTodoAction, function (context, url) {
+    (0,_todo_update_status_task__WEBPACK_IMPORTED_MODULE_4__["default"])(context, url);
+  }), _defineProperty(_actions, _type__WEBPACK_IMPORTED_MODULE_0__["default"].DeleteTodoAction, function (context, tuid) {
+    (0,_todo_delete_task__WEBPACK_IMPORTED_MODULE_5__["default"])(context, tuid);
   }), _actions)
 });
 
@@ -5898,6 +5914,67 @@ var addTask = function addTask(context, payload) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addTask);
+
+/***/ }),
+
+/***/ "./resources/js/store/todo/delete-task.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/todo/delete-task.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _lib_httpClient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../lib/httpClient */ "./resources/js/lib/httpClient.js");
+/* harmony import */ var _type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../type */ "./resources/js/store/type.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+var deleteTasks = function deleteTasks(context, tuid) {
+  try {
+    (0,_lib_httpClient__WEBPACK_IMPORTED_MODULE_1__["default"])('/api/v1/todo/' + tuid, 'DELETE').then( /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return response.json();
+
+              case 2:
+                res = _context.sent;
+                context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].DeleteTodoSetter, tuid);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
+  } catch (e) {
+    context.commit(_type__WEBPACK_IMPORTED_MODULE_2__["default"].DeleteTodoSetter, null);
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (deleteTasks);
 
 /***/ }),
 
@@ -6098,7 +6175,8 @@ var type = {
   StatusUpdateTodoSetter: "todo/setter/status",
   AddTodoAction: "todo/action/store",
   UpdateTodoAction: "todo/action/update",
-  DeleteTodoAction: "todo/action/delete"
+  DeleteTodoAction: "todo/action/delete",
+  DeleteTodoSetter: "todo/setter/delete"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (type);
 
@@ -11220,7 +11298,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fas {\n  color: red;\n}\n.task {\n  background: #f4f4f4;\n  margin: 5px;\n  padding: 10px 20px;\n  cursor: pointer;\n}\n.task.status {\n  border-left: 5px solid green;\n}\n.task h3 {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fas {\n    color: red;\n}\n.task {\n    background: #f4f4f4;\n    margin: 5px;\n    padding: 10px 20px;\n    cursor: pointer;\n}\n.task.status {\n    border-left: 5px solid green;\n}\n.task h3 {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30736,12 +30814,12 @@ var render = function () {
     },
     [
       _c("h3", [
-        _vm._v("\n    " + _vm._s(_vm.task.title) + "\n    "),
+        _vm._v("\n        " + _vm._s(_vm.task.title) + "\n        "),
         _c("i", {
           staticClass: "fas fa-times",
           on: {
             click: function ($event) {
-              return _vm.$emit("delete-task", _vm.task.tuid)
+              return _vm.deleteTask()
             },
           },
         }),
@@ -30877,12 +30955,7 @@ var render = function () {
         on: { "add-task": _vm.addTask },
       }),
       _vm._v(" "),
-      _c("Tasks", {
-        on: {
-          "toggle-status": _vm.toggleStatus,
-          "delete-task": _vm.deleteTask,
-        },
-      }),
+      _c("Tasks", { on: { "toggle-status": _vm.toggleStatus } }),
       _vm._v(" "),
       _c("Footer"),
     ],

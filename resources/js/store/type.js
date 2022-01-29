@@ -19,7 +19,9 @@ const type = {
 
     AddTodoAction: "todo/action/store",
     UpdateTodoAction: "todo/action/update",
+
     DeleteTodoAction: "todo/action/delete",
+    DeleteTodoSetter: "todo/setter/delete",
 };
 
 export default type;

@@ -5,6 +5,7 @@ import addTask from "./todo/add-task";
 import fetchTasks from "./todo/fetch-tasks";
 import fetchTask from "./todo/fetch-task";
 import updateStatusTasks from "./todo/update-status-task";
+import deleteTask from "./todo/delete-task";
 
 Vue.use(Vuex);
 
@@ -48,6 +49,9 @@ export const store = new Vuex.Store({
         [type.StatusUpdateTodoSetter]: (state, payload) => {
             state.todoList.data = state.todoList.data.map(task => payload.tuid === task.tuid ? payload : task);
         },
+        [type.DeleteTodoSetter]: (state, tuid) => {
+            state.todoList.data = state.todoList.data.filter(task => tuid !== task.tuid);
+        },
     },
     actions: {
         [type.AddTodoAction]: (context, payload) => {
@@ -56,15 +60,15 @@ export const store = new Vuex.Store({
         [type.FetchTodoList]: (context, payload) => {
             fetchTasks(context,payload);
         },
-        [type.CurrentTodoAction]: (context, payload) => {
-            fetchTask(context, payload);
+        [type.CurrentTodoAction]: (context, tuid) => {
+            fetchTask(context, tuid);
         },
-        [type.StatusUpdateTodoAction]: (context, payload) => {
-            updateStatusTasks(context, payload);
+        [type.StatusUpdateTodoAction]: (context, url) => {
+            updateStatusTasks(context, url);
         },
-        // [type.AddTodo]: (context, {payload}) => {
-        //     updateTask(context, payload);
-        // },
+        [type.DeleteTodoAction]: (context, tuid) => {
+            deleteTask(context, tuid);
+        },
     },
 })
 

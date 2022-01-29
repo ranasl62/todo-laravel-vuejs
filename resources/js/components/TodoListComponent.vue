@@ -8,7 +8,6 @@
         <AddTask v-show="showAddTask" @add-task="addTask"/>
         <Tasks
             @toggle-status="toggleStatus"
-            @delete-task="deleteTask"
         />
         <Footer/>
     </div>
@@ -50,16 +49,6 @@ export default {
         },
         async addTask(task) {
             this.addTodoMethod(task);
-        },
-        async deleteTask(tuid) {
-            if (confirm('Are you sure?')) {
-                const res = await fetch(`/api/v1/todo/${tuid}`, {
-                    method: 'DELETE',
-                })
-                res.status === 200
-                    ? (this.tasks = this.tasks.filter((task) => task.tuid !== tuid))
-                    : alert('Error deleting task')
-            }
         },
         async toggleStatus(tuid) {
            this.statusUpdateTodoMethod(tuid);
